@@ -35,7 +35,8 @@ function DgLog($log, $window, dgLogDbFirebase) {
         var errorData = {
             url: $window.location.href,
             message: errorMessage,
-            userAgent: navigator.userAgent
+            userAgent: navigator.userAgent,
+            createdAt: new Date()
         };
 
         dgLogDbFirebase.add(errorData);
@@ -85,7 +86,3 @@ DgLogDbFirebase.$inject = [
 
 angular.module('dugun.log')
     .factory('dgLogDbFirebase', DgLogDbFirebase);
-
-angular.module('dugun.log').constant('dgLogConfig', {
-    firebaseUrl: ''
-});

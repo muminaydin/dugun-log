@@ -25,7 +25,8 @@ function DgLog($log, $window, dgLogDbFirebase) {
         var errorData = {
             url: $window.location.href,
             message: errorMessage,
-            userAgent: navigator.userAgent
+            userAgent: navigator.userAgent,
+            createdAt: new Date()
         };
 
         dgLogDbFirebase.add(errorData);
