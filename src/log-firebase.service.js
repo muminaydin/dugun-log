@@ -13,11 +13,14 @@ function DgLogDbFirebase($firebaseArray, dgLogConfig) {
     /**
      * @ngdoc method
      * @memberof DgLogDbFirebase
+     * @param data {object} Item to add
+     * @param type {string='error'} Type of log to add.
      * @description
      * Adds a new line
      */
-    service.add = function(data) {
-        return $firebaseArray(firebase).$add(data);
+    service.add = function(data, type) {
+        if(!type) type = 'error';
+        return $firebaseArray(firebase.child(type)).$add(data);
     };
 
     return service;

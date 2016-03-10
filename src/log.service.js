@@ -20,16 +20,31 @@ function DgLog($log, $window, dgLogDbFirebase) {
     service.error = function(exception, cause) {
         $log.error.apply($log, arguments);
 
-        var errorMessage = exception.toString();
+        var errorMessage = exception.toString(),
+            errorStack = exception.stack.toString(),
+            errorData;
 
-        var errorData = {
+        errorData = {
             url: $window.location.href,
             message: errorMessage,
+            stack: errorStack,
             userAgent: navigator.userAgent,
             createdAt: (new Date()).toString()
         };
 
-        dgLogDbFirebase.add(errorData);
+        return dgLogDbFirebase.add(errorData);
+    };
+
+    /**
+     * @ngdoc method
+     * @memberof DgLog
+     * @param type {string} Type of log
+     * @param message {object} Message to log
+     * @description
+     * Logs custom message
+     */
+    service.log = function(type, message) {
+        return dgLogDbFirebase.add(message, type);
     };
 
     return service;
